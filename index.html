@@ -1,67 +1,47 @@
-const levelSlider = document.getElementById("level");
-const water = document.getElementById("water");
-const percentage = document.getElementById("percentage");
-const status = document.getElementById("status");
-const alarm = document.getElementById("alarm");
-const resetButton = document.getElementById("reset");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Level Alarm Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-// Function to update water level
-function updateWaterLevel() {
+    <header>
+        <h1>💧 Water Level Alarm</h1>
+        <p>Water Tank Monitoring System</p>
+    </header>
 
-    let level = Number(levelSlider.value);
+    <main class="dashboard">
 
-    // Update tank water
-    water.style.height = level + "%";
+        <section class="tank-section">
+            <h2>Water Tank</h2>
 
-    // Update percentage
-    percentage.textContent = level + "%";
+            <div class="tank">
+                <div class="water" id="water"></div>
+            </div>
 
-    // Check water level
-    if (level < 40) {
+            <h3 id="percentage">0%</h3>
+            <p>Current Water Level</p>
+        </section>
 
-        status.textContent = "LOW";
-        status.style.color = "#22c55e";
+        <section class="control-section">
+            <h2>Control Panel</h2>
 
-        alarm.textContent = "OFF";
-        alarm.style.color = "#22c55e";
+            <label for="level">Adjust Water Level</label>
+            <input type="range" id="level"
+                   min="0" max="100" value="0">
 
-        water.style.background = "#38bdf8";
+            <h3>Status: <span id="status">LOW</span></h3>
 
-    } 
-    else if (level < 80) {
+            <h3>Alarm: <span id="alarm">OFF</span></h3>
 
-        status.textContent = "MEDIUM";
-        status.style.color = "#facc15";
+            <button id="reset">Reset Tank</button>
+        </section>
 
-        alarm.textContent = "OFF";
-        alarm.style.color = "#22c55e";
+    </main>
 
-        water.style.background = "#eab308";
-
-    } 
-    else {
-
-        status.textContent = "HIGH";
-        status.style.color = "#ef4444";
-
-        alarm.textContent = "ON";
-        alarm.style.color = "#ef4444";
-
-        water.style.background = "#ef4444";
-    }
-}
-
-// Listen for slider changes
-levelSlider.addEventListener("input", updateWaterLevel);
-
-// Reset tank
-resetButton.addEventListener("click", function() {
-
-    levelSlider.value = 0;
-    updateWaterLevel();
-
-});
-
-
-// Initial display
-updateWaterLevel();
+    <script src="script.js"></script>
+</body>
+</html>
