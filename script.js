@@ -1,66 +1,70 @@
-const levelSlider = document.getElementById("level");
-const water = document.getElementById("water");
-const percentage = document.getElementById("percentage");
-const status = document.getElementById("status");
-const alarm = document.getElementById("alarm");
-const resetButton = document.getElementById("reset");
+// Alarm sound variables
+let alarmAudioContext = null;
+let alarmOscillator = null;
+let alarmGain = null;
+let alarmInterval = null;
 
-// Function to update water level
-function updateWaterLevel() {
+function startAlarm() {
 
-    let level = Number(levelSlider.value);
+    if (alarmOscillator) return;
 
-    // Update tank water
-    water.style.height = level + "%";
+    const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
 
-    // Update percentage
-    percentage.textContent = level + "%";
+    if (!AudioContextClass) return;
 
-    // Check water level
-    if (level < 40) {
+    alarmAudioContext = new AudioContextClass();
 
-        status.textContent = "LOW";
-        status.style.color = "#22c55e";
+    alarmOscillator = alarmAudioContext.createOscillator();
+    alarmGain = alarmAudioContext.createGain();
 
-        alarm.textContent = "OFF";
-        alarm.style.color = "#22c55e";
+    alarmOscillator.type = "square";
+    alarmOscillator.frequency.value = 850;
 
-        water.style.background = "#38bdf8";
+    alarmGain.gain.value = 0;
 
-    } 
-    else if (level < 80) {
+    alarmOscillator.connect(alarmGain);
+    alarmGain.connect(alarmAudioContext.destination);
 
-        status.textContent = "MEDIUM";
-        status.style.color = "#facc15";
+    alarmOscillator.start();
 
-        alarm.textContent = "OFF";
-        alarm.style.color = "#22c55e";
-
-        water.style.background = "#eab308";
-
-    } 
-    else {
-
-        status.textContent = "HIGH";
-        status.style.color = "#ef4444";
-
-        alarm.textContent = "ON";
-        alarm.style.color = "#ef4444";
-
-        water.style.background = "#ef4444";
+    if (alarmAudioContext.state === "suspended") {
+        alarmAudioContext.resume();
     }
+
+    let beep = false;
+
+    alarmInterval = setInterval(() => {
+        beep = !beep;
+
+        alarmGain.gain.setTargetAtTime(
+            beep ? 0.08 : 0,
+            alarmAudioContext.currentTime,
+            0.02
+        );
+    }, 350);
 }
 
-// Listen for slider changes
-levelSlider.addEventListener("input", updateWaterLevel);
+function stopAlarm() {
 
-// Reset tank
-resetButton.addEventListener("click", function() {
+    if (alarmInterval) {
+        clearInterval(alarmInterval);
+        alarmInterval = null;
+    }
 
-    levelSlider.value = 0;
-    updateWaterLevel();
+    if (alarmOscillator) {
+        alarmOscillator.stop();
+        alarmOscillator.disconnect();
+        alarmOscillator = null;
+    }
 
-});
+    if (alarmGain) {
+        alarmGain.disconnect();
+        alarmGain = null;
+    }
 
-// Initial display
-updateWaterLevel();
+    if (alarmAudioContext) {
+        alarmAudioContext.close();
+        alarmAudioContext = null;
+    }
+}
