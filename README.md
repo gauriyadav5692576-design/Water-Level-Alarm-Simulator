@@ -13,21 +13,6 @@ It allows users to adjust the water level using a slider and displays the corres
 - Simulate water level detection.
 - Understand how an alarm system responds to different water levels.
 
-⚙️ Technologies Used
-
-- HTML5 – Structure of the application.
-- CSS3 – Styling and user interface.
-- JavaScript – Water level detection and alarm logic.
-
-🚀 Features
-
-- Interactive water tank simulation.
-- Adjustable water level slider.
-- Live water level percentage display.
-- Three water level conditions: LOW, MEDIUM, and HIGH.
-- Automatic alarm activation at high water levels.
-- Reset button to restore the tank to its initial state.
-- Responsive user interface.
 
 📊 Working Logic
 
@@ -35,27 +20,6 @@ Water Level| Status| Alarm
 0–39%| LOW| OFF
 40–79%| MEDIUM| OFF
 80–100%| HIGH| ON
-
-📁 Project Structure
-
-Water-Level-Alarm-Simulator/
-│
-├── index.html
-├── style.css
-├── script.js
-└── README.md
-
-▶️ How to Run
-
-1. Download or clone this repository.
-2. Open the project folder.
-3. Open "index.html" in a web browser.
-4. Adjust the slider to change the water level.
-5. Observe the status and alarm indicators.
-
-📚 Learning Outcomes
-
-This project demonstrates basic web development concepts, JavaScript conditional statements, DOM manipulation, event listeners, and interactive simulation.
 
 👨‍🎓 Student Details
 
