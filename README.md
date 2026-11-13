@@ -24,7 +24,7 @@ Water Level| Status| Alarm
 👨‍🎓 Student Details
 
 - Name: Gauri Yadav
-- Roll Number: 202510101150172
+- Roll Number: 202510101150174
 - Subject: Digital Electronics
 - Project Title: Water Level Alarm Simulator
 - Submitted to: profprabhat7-lang
